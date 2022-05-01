@@ -1,14 +1,17 @@
 # bsi_chinacheck
 
-# 22.04.15 updated
+# 22.05.01 updated
+
+INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
+                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
+                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
 
 # 0. what do you need
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], '/Documents/GitHub/KIET_831/bsi_chinacheck')
-
-YEAR = 2022
-QUARTER = 1
-FILE = '중국 BSI 1분기 원자료 확인_raw data_20220329_17h13m(검증용).xlsx'
+FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
+YEAR = 2022 # 연도
+QUARTER = 1 # 분기
+FILE = '중국 BSI 1분기 원자료 확인_raw data_20220329_17h13m(검증용).xlsx' # 원자료 이름
 
 # 1. setting
 
@@ -63,10 +66,10 @@ ERROR_LIST <- cbind(NUMBER = BSI$NUMBER, NAME = BSI$NAME,
   as_tibble %>% # 데이터 프레임으로 만든 뒤
   filter(if_any(starts_with('ERROR'), ~ . == 'TRUE')) # 한 개라도 에러 발생한 행만 남김
 
-FOLDER.2 <- paste0(FOLDER, '/', YEAR, '-', QUARTER, 'Q')
+FOLDER.2 <- paste0(FOLDER, '/', YEAR, '-', QUARTER, 'Q') # 연도, 분기 따라서
 
-dir.create(FOLDER.2)
+dir.create(FOLDER.2) # 별도 폴더를 만든 다음
 
-setwd(FOLDER.2)
+setwd(FOLDER.2) # 작업 경로로 지정해
 
 write_xlsx(ERROR_LIST, 'errorlist.xlsx') # 엑셀 파일로 출력(저장)

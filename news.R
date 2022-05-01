@@ -1,23 +1,27 @@
 # news
 
-# 22.04.15 updated
+# 22.05.01 updated
+
+INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
+                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
+                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
 
 # 0. what do you need
 
-PERIOD = 12 # 12시간 전 기사까지 스크랩(실제로는 좀 더 여유있게 모음)
+FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], '/Documents/GitHub/KIET_831/news')
+PERIOD = 12 # 12시간 전 기사까지 스크랩(실제로는 좀 더 여유있게 모음)
 
 # 1. setting
 
-setwd(FOLDER)
+setwd(FOLDER) # 작업 경로 설정
 
-library(tidyverse)
-library(rstudioapi)
-library(RSelenium)
-library(rvest)
-library(lubridate)
-library(openxlsx)
+library(tidyverse) # 데이터 핸들링
+library(rstudioapi) # 터미널 사용
+library(RSelenium) # 크롬 자동화
+library(rvest) # html 해석
+library(lubridate) # 날짜
+library(openxlsx) # 엑셀 입출력
 
 # 2. selenium
 
@@ -25,75 +29,77 @@ TERM_COMMAND <- 'java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-s
 terminalExecute(command = TERM_COMMAND) # 개인 컴퓨터에서 잘 안 되는 경우 java 설치, 방화벽 개인/공용 설정 권장
 
 REMDR = remoteDriver(port = 4445, browserName = 'chrome')
-REMDR$open()
+REMDR$open() # 크롬 오픈
 
 # 3-1. 연합인포맥스(전체)
 
-INFOMAX <- tibble()
+INFOMAX <- tibble() # 데이터 담을 빈 그릇
 
-for (i in 1:100) {
+for (i in 1:100) { # 다음 작업을 max 100 페이지까지 시행
   
   URL_INFOMAX <- paste0('https://news.einfomax.co.kr/news/articleList.html?page=',
-                        i, '&view_type=sm')
+                        i, '&view_type=sm') # 페이지 번호 i를 매개로 주소가 변경
   
-  REMDR$navigate(URL_INFOMAX)
+  REMDR$navigate(URL_INFOMAX) # 뉴스 페이지 접속해
   
-  temp1 <- REMDR$getPageSource()
+  temp1 <- REMDR$getPageSource() # 페이지 정보를 가져옴
   
   temp2 <- read_html(temp1[[1]]) %>% 
-    html_elements('div.list-titles') %>% 
-    html_text() %>% 
-    str_remove_all('\"') %>% 
-    tibble() %>% 
-    filter(str_detect(., ''))
+    html_elements('div.list-titles') %>% # 뉴스 제목 파트를 찾아 
+    html_text() %>% # 텍스트를 추출한 뒤
+    str_remove_all('\"') %>%  # " 문자는 제거
+    tibble() %>% # 단정한 데이터 프레임으로 만들고
+    filter(str_detect(., '')) # NA 제거
   
   temp3 <- read_html(temp1[[1]]) %>% 
-    html_elements('div.list-dated') %>% 
-    html_text() %>%
-    str_split(' | ', simplify = TRUE) %>% 
-    as.data.frame() %>% 
-    tibble() %>% 
-    rownames_to_column(var = 'V0') %>% 
-    mutate(V0 = as.double(V0))
+    html_elements('div.list-dated') %>% # 뉴스 메타데이터 파트를 찾아 
+    html_text() %>% # 텍스트 추출
+    str_split(' | ', simplify = TRUE) %>% # | 문자 기준으로 분기
+    as.data.frame() %>%  # 데이터 프레임 전환
+    tibble() %>% # 단정한 데이터 프레임으로 만들고
+    rownames_to_column(var = 'V0') %>% # 순서 맞추기 위해 넘버링
+    mutate(V0 = as.double(V0)) # 넘버링은 숫자 클래스로 변경
   
   temp3.1 <- temp3 %>% 
-    filter(V4 == '|') %>% 
-    mutate(V7 = V6) %>% 
+    filter(V4 == '|') %>% # | 문자가 있는 경우는
+    mutate(V7 = V6) %>% # 변수 순서를 일부 조정
     mutate(V6 = V5)
   
   temp3.2 <- temp3 %>% 
-    filter(V4 != '|')
+    filter(V4 != '|') # | 문자가 없는 경우는 그대로
   
-  temp3.3 <- rbind(temp3.1, temp3.2) %>% 
-    select(V0, V1, V3, V6, V7) %>% 
-    arrange(V0) %>% 
-    filter(V0 != 31) %>% 
-    mutate(V8 = ymd_hm(paste(V6, V7), tz = 'Asia/Seoul')) %>% 
+  temp3.3 <- rbind(temp3.1, temp3.2) %>% # 수정한 걸 묶어서
+    select(V0, V1, V3, V6, V7) %>% # 필요한 변수만 선택한 뒤
+    arrange(V0) %>% # 넘버링해둔 걸로 순서 맞춰주고
+    filter(V0 != 31) %>% # 마지막 넘버링은 의미 없으니 제거
+    mutate(V8 = ymd_hm(paste(V6, V7), tz = 'Asia/Seoul')) %>% # 날짜를 dttm으로 새로 만듦 
     select(V0, V1, V3, V8)
   
   temp4 <- read_html(temp1[[1]]) %>% 
-    html_elements('p.list-summary') %>% 
+    html_elements('p.list-summary') %>% # 뉴스 링크 파트를 찾아서
     html_elements('a') %>% 
-    html_attr('href')
+    html_attr('href') # 링크만 수집
   
-  temp4.1 <- paste0('https://news.einfomax.co.kr', temp4) %>% 
+  temp4.1 <- paste0('https://news.einfomax.co.kr', temp4) %>% # core에 붙여주고
     tibble %>% 
-    filter(str_detect(., 'idxno'))
+    filter(str_detect(., 'idxno')) # 불필요한 링크는 배제
   
   temp5 <- tibble(제목 = temp2$., 분야 = temp3.3$V1, 기자 = temp3.3$V3, 시각 = temp3.3$V8, 링크 = temp4.1$.) %>% 
-    relocate(분야, 시각, 기자, 링크, 제목)
+    relocate(분야, 시각, 기자, 링크, 제목) # 지금껏 모은 데이터를 묶어서 저장하는데
   
-  temp5.1 <- interval(temp5$시각, now(tz = 'Asia/Seoul')) %>% 
-    as.period() < hours(PERIOD)
+  temp5.1 <- interval(temp5$시각, now(tz = 'Asia/Seoul')) %>% # 뉴스 작성 시각과 현재 사이의 interval 계산해서
+    as.period() < hours(PERIOD) # interval이 기준 내에 있는지 계산
   
-  if(sum(temp5.1) == 0) break
+  if(sum(temp5.1) == 0) break # 만일 모든 기사가 기준을 넘어선다면, 데이터 저장하지 않고 loop 탈출
   
-  INFOMAX <- rbind(INFOMAX, temp5)
+  INFOMAX <- rbind(INFOMAX, temp5) # 기준 넘지 않으면, 기존 데이터 그릇에 적층
   
 }
 
 INFOMAX <- INFOMAX %>% 
-  mutate(시각 = as.character(시각))
+  mutate(시각 = as.character(시각)) # 시각 변수를 엑셀 출력하기 좋게 character class로 변경
+
+# 언론사별로 상이하지만 골격은 비슷해서, 상세 설명은 생략함
 
 # 3-2. 뉴스핌(글로벌)
 
@@ -417,16 +423,16 @@ for (i in 2:10) {
 
 # 4. close
 
-REMDR$close()
+REMDR$close() # 크롬 종료
 
-terminalKill(terminalList())
+terminalKill(terminalList()) # 터미널 종료
 
 # 5. export
 
 write.xlsx(x = list(INFOMAX, EBN, NEWSPIM, GLOBALECO, YHNEWS, NEWSIS, NEWS1), 
            sheetName = c('연합인포맥스(전체)', '산업경제신문(전체)', '뉴스핌(글로벌)', '글로벌이코노믹(국제)',
                          '연합뉴스(세계)', '뉴시스(국제최신)', '뉴스1(국제)'), 
-           file = paste(today(), '뉴스.xlsx'), overwrite = TRUE)
+           file = paste(today(), '뉴스.xlsx'), overwrite = TRUE) # 모은 뉴스 데이터를 다중 시트, 하나의 엑셀로 저장
 
 # 6. summary 
 

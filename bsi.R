@@ -1,22 +1,26 @@
 # bsi
 
-# 22.04.15 updated
+# 22.05.01 updated
+
+INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
+                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
+                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
 
 # 0. what do you need
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], '/Documents/GitHub/KIET_831/bsi')
+FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
 
-YEAR = 2022
-QUARTER = 1
-FILE = '케이스탯(2022.03) - 제조업 경기조사 및 패널기업 관리 결과표(2022년 1분기)_220404.xlsx'
+YEAR = 2022 # 연도
+QUARTER = 1 # 분기
+FILE = '케이스탯(2022.03) - 제조업 경기조사 및 패널기업 관리 결과표(2022년 1분기)_220404.xlsx' # 원자료 이름
 
 # 1. setting
 
-setwd(FOLDER)
+setwd(FOLDER) # 작업 경로 설정
 
-library(tidyverse)
-library(readxl)
-library(openxlsx)
+library(tidyverse) # 데이터 핸들링
+library(readxl) # 엑셀 로드
+library(openxlsx) # 엑셀 출력
 
 ROUND <- function(x, digits = 0) {
   
@@ -30,6 +34,8 @@ ROUND <- function(x, digits = 0) {
   z*posneg
   
 } # 기본 function은 round(0.5) = 0 만들어서, ROUND(0.5) = 1 되는 사용자 함수 생성
+
+# 다소 복잡하고, 추후 개선 여지가 많아 코드 설명을 상세히 적지 않음
 
 # 2. data load
 
@@ -347,10 +353,6 @@ APPENDIX.REGION <- BSI_REGION %>%
            광주, 전북, 전남,
            대전, 충북, 충남) %>% 
   mutate_at(vars(전국:충남), ROUND) # 지역별 시계열
-
-# 5-3. 중국 BSI
-
-# 열심히 개발 예정
 
 # 6. export
 

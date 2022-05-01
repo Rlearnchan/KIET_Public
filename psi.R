@@ -1,10 +1,15 @@
 # psi
 
-# 22.04.15 updated
+# 22.05.01 updated
+
+INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
+                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
+                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
 
 # 0. what do you need
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], '/Documents/GitHub/KIET_831/psi')
+FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
+
 
 YEAR = 2022
 MONTH = 3
