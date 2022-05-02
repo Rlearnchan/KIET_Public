@@ -14,7 +14,8 @@
 
 <최근 업로드 일자 확인>
 
-
+ - Geopolitical, Trade : 반응형 차트에 직접 마우스 커서 놓고 확인
+ - Growth, Inflation : 차트 아래 source 부분
 
 # bsi
 
