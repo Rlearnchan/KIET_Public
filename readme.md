@@ -1,6 +1,6 @@
 # blackrock
 
-[블랙록 차트 데이터 수집하기]
+[블랙록 차트 데이터 ]
 
 1. blackrock.R 열어서 '0. what do you need' 파트의 다음 항목 수정
 
