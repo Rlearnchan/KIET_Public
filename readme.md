@@ -96,6 +96,26 @@
  - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
  - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
 
+# kita
+
+[무역협회 테이블 크롤링]
+
+1. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
+
+ - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
+ - geckodriver.exe
+ - selenium-server-standalone-4.0.0-alpha-1.jar
+
+2. kita.R 열어서 '0. what do you need' 파트의 다음 항목 수정
+
+ - A : 가공단계 설정 (리스트 박스 순서대로 1~5, 예컨대 소비재는 2)
+
+3. 전부 실행 (ctrl+a, ctrl+enter)
+
+ - console에 페이지 넘김 관련해 selenium message가 뜨지만, 작동에는 문제 없음
+
+4. 폴더에 'kita_가공단계' 식으로 엑셀 파일이 생성
+
 # news
 
 [민위원님 전용 뉴스 가판대]
