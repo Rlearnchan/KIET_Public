@@ -116,6 +116,12 @@
 
 4. 폴더에 'kita_가공단계' 식으로 엑셀 파일이 생성
 
+<chromedriver.exe 관련>
+
+ - 크롬브라우저가 업데이트되면, chromedriver.exe 도 같은 버전으로 대체해줘야 함
+ - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
+ - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
+
 # news
 
 [민위원님 전용 뉴스 가판대]
