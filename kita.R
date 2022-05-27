@@ -6,6 +6,9 @@
 
 A <- 2 # 가공단계 : 1차산품, 소비재, 자본재, 중간재, 기타
 
+ID <- 'kie#####' # 아이디
+PW <- 'lib#####' # 비밀번호
+
 # 1. setting
 
 setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/kita') # 작업경로 설정
@@ -34,10 +37,10 @@ BUTTON_LOGIN <- REMDR$findElement('xpath', '//*[@id="header"]/div/div[2]/ul/li[2
 BUTTON_LOGIN$clickElement()
 
 TEXT_ID <- REMDR$findElement('xpath', '//*[@id="userId"]')
-TEXT_ID$sendKeysToElement(list('kietkita'))
+TEXT_ID$sendKeysToElement(list(ID))
 
 TEXT_PW <- REMDR$findElement('xpath', '//*[@id="pwd"]')
-TEXT_PW$sendKeysToElement(list('library2'))
+TEXT_PW$sendKeysToElement(list(PW))
 
 BUTTON_PASS <- REMDR$findElement('xpath', '//*[@id="loginBtn"]')
 BUTTON_PASS$clickElement()
