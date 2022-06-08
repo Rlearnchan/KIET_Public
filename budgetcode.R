@@ -26,19 +26,19 @@ DATA.2 <- DATA.1[DATA.1$세부사업명 %in% DATA.0$세부사업명, ] # 20, 21 
 
 DATA.3 <- DATA.0 %>% filter(세부사업명 %in% DATA.2$세부사업명) # 해당 사업의 원류 (20)
 
-for (i in 1:nrow(DATA)) { # 단순하게 짜서 오래 걸림
+for (i in 1:nrow(DATA)) { 
   
   for (k in 1:nrow(DATA.3)) {
     
-    if(DATA[i, 14] == DATA.3[k, 14]) {
+    if(DATA[i, 14] == DATA.3[k, 14]) { # 연속 사업인 경우
       
-      DATA[i, 2] <- DATA.3[k, 2]
+      DATA[i, 2] <- DATA.3[k, 2] # 코드를 채워 넣는다
       
     }
     
   }
   
-}
+} 
 
 # 3. export
 
