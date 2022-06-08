@@ -1,4 +1,4 @@
-# "Nice to meet you!"
+# Nice to meet you!
 
 * 작업 폴더 경로는 각자 케이스에 맞춰 설정해주세요. 이하에선 따로 언급하지 않습니다 :)
 
