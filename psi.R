@@ -2,14 +2,7 @@
 
 # 22.05.01 updated
 
-INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
-                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
-                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
-
 # 0. what do you need
-
-FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
-
 
 YEAR = 2022
 MONTH = 3
@@ -17,7 +10,7 @@ FILE = '2022년3월_누적시계열_PSI_작성용(잠정).xlsx' # 최신 버전 
 
 # 1. setting
 
-setwd(FOLDER)
+setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/psi') # 작업 경로 설정
 
 library(tidyverse) # 데이터 핸들링 패키지
 library(readxl) # 엑셀 로드 패키지
