@@ -44,7 +44,7 @@
 
 1. budgetcode.R 열어서 '0. what do you need' 파트의 다음 항목 수정
 
- - INPUT : 부처별 20, 21, 22년 예산 시트
+ - INPUT : 부처별 20, 21, 22년 예산 시트 파일
  - OUTPUT : 저장할 파일 이름
 
 2. 전부 실행 (ctrl+a, ctrl+enter)
