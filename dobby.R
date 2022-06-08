@@ -2,22 +2,16 @@
 
 # 22.05.01 updated
 
-INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
-                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
-                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
-
 # 0. what do you need
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
-
 WHEN <- '17:45:00' # 17시 45분 이후 체크
-ID <- '21032' # 포털 아이디
-PW <- '21032961228' # 포털 비밀번호 
+ID <- '210##' # 포털 아이디
+PW <- '210########' # 포털 비밀번호 
 SHUTDOWN <- 'YES' # 퇴근체크 후, 컴퓨터 종료할 지 선택
 
 # 1. setting
 
-setwd(FOLDER) # 작업 경로 설정
+setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/dobby') # 작업 경로 설정
 
 library(tidyverse) # 데이터 핸들링
 library(rstudioapi) # 터미널 사용
