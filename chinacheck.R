@@ -2,20 +2,15 @@
 
 # 22.05.01 updated
 
-INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
-                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
-                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
-
 # 0. what do you need
 
-FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
 YEAR = 2022 # 연도
 QUARTER = 1 # 분기
 FILE = '중국 BSI 1분기 원자료 확인_raw data_20220329_17h13m(검증용).xlsx' # 원자료 이름
 
 # 1. setting
 
-setwd(FOLDER) # 작업 디렉토리 지정
+setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/chinacheck') # 작업 디렉토리 지정
 
 library(tidyverse) # 데이터 핸들링
 library(readxl) # 엑셀 로드
