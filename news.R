@@ -2,19 +2,13 @@
 
 # 22.05.01 updated
 
-INTERN <- ifelse(Sys.info()['user'] == 'fragr', # 랩탑에서 사용한다면
-                 '/Dropbox/GitHub/KIET_Public', # 랩탑 경로
-                 '/KIET/Documents/GitHub/KIET_Public') # 아니면 회사 경로
-
 # 0. what do you need
-
-FOLDER = paste0('C:/Users/', Sys.info()['user'], INTERN) # 본인이 작업할 폴더
 
 PERIOD = 12 # 12시간 전 기사까지 스크랩(실제로는 좀 더 여유있게 모음)
 
 # 1. setting
 
-setwd(FOLDER) # 작업 경로 설정
+setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/news') # 작업 경로 설정
 
 library(tidyverse) # 데이터 핸들링
 library(rstudioapi) # 터미널 사용
