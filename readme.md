@@ -2,7 +2,33 @@
 
 [빅파이낸스 산업 데이터]
 
-열심히 설명할 예정
+1. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
+
+ - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
+ - geckodriver.exe
+ - selenium-server-standalone-4.0.0-alpha-1.jar
+
+2. bigpie.R 열어서 '0. what do you need' 파트의 다음 항목 수정
+
+ - ID : 아이디
+ - PW : 비밀번호
+
+3. 0~2 단계 실행 (로그인 이전)
+
+ - 크롬 창을 띄운 뒤, 다운로드 경로를 작업 폴더로 지정해야 함
+ - 설정 - 다운로드 - 위치 순으로 진입
+
+4. 3~4 단계 실행 (루프, 엑셀 출력)
+
+5. 폴더에 데이터 원자료와, 메타데이터 엑셀 파일이 생성 
+
+ - 각각 'Aicel_항목이름', 'YYYY-MM-DD 데이터 정보' 식으로 네이밍 
+
+<chromedriver.exe 관련>
+
+ - 크롬브라우저가 업데이트되면, chromedriver.exe 도 같은 버전으로 대체해줘야 함
+ - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
+ - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
 
 # blackrock
 
