@@ -97,6 +97,7 @@
  - YEAR : 연도
  - QUARTER : 분기
  - FILE : 검증용 raw data 엑셀 파일
+ - FOLDER : 작업 경로
 
 3. 전부 실행 (ctrl+a, ctrl+enter)
 
