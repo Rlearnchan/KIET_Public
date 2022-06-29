@@ -25,7 +25,7 @@ BSI <- read.xlsx(FILE) %>% # 엑셀 파일 로드해서
   select(contains(c('아이디', 'Q'))) %>% # 회사명, 응답 결과 variable만 고르고
   rownames_to_column(var = 'NUMBER') # row numbering은 아예 새 column으로 이관
 
-BLANK <- c(NA, 0) # NA or 0이면 error 판단 되게끔
+BLANK <- c(NA, 0, ' ') # NA or 0이면 error 판단 되게끔
 
 # 3-1. 사업비율 합계 100
 
