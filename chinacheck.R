@@ -1,28 +1,28 @@
-# bsi_chinacheck
+# chinacheck
 
-# 22.05.01 updated
+# 22.06.29 updated
 
 # 0. what do you need
 
 YEAR = 2022 # 연도
-QUARTER = 1 # 분기
-FILE = '중국 BSI 1분기 원자료 확인_raw data_20220329_17h13m(검증용).xlsx' # 원자료 이름
+QUARTER = 2 # 분기
+FILE = '파일.xlsx' # 원자료 이름
+FOLDER = 'C:/Users/KIET/Desktop/오목눈이' # 경로
 
 # 1. setting
 
-setwd('C:/Users/KIET/Documents/GitHub/KIET_Private/chinacheck') # 작업 디렉토리 지정
+setwd(FOLDER) # 작업 디렉토리 지정
 
 library(tidyverse) # 데이터 핸들링
-library(readxl) # 엑셀 로드
-library(writexl) # 엑셀 출력
+library(openxlsx) # 엑셀 입출력
 
 # 2. data load
 
 # 원자료 엑셀 파일의 첫 행은 먼저 지우고 로드 바람
 
-BSI <- read_xlsx(FILE) %>% # 엑셀 파일 읽어와서
-  mutate(NAME = `이름...8`) %>% # 회사명(8번째 column) 변수명을 NAME으로 변경 
-  select(contains(c('NAME', 'Q'))) %>% # 회사명, 응답 결과 variable만 고르고
+BSI <- read.xlsx(FILE) %>% # 엑셀 파일 로드해서
+  tibble() %>% # 보기 좋게 만든 뒤
+  select(contains(c('아이디', 'Q'))) %>% # 회사명, 응답 결과 variable만 고르고
   rownames_to_column(var = 'NUMBER') # row numbering은 아예 새 column으로 이관
 
 BLANK <- c(NA, 0) # NA or 0이면 error 판단 되게끔
@@ -55,7 +55,7 @@ ERROR14 <- BSI$Q8_M3 %in% BLANK + BSI$Q13_M3 %in% BLANK == 1 # 제도정책 매�
 
 # 4. export
 
-ERROR_LIST <- cbind(NUMBER = BSI$NUMBER, NAME = BSI$NAME, 
+ERROR_LIST <- cbind(NUMBER = BSI$NUMBER, NAME = BSI$아이디, 
                     ERROR1, ERROR2, ERROR3, ERROR4, ERROR5, ERROR6, ERROR7, 
                     ERROR8, ERROR9, ERROR10, ERROR11, ERROR12, ERROR13, ERROR14) %>% # 에러 판단 결과 묶어서
   as_tibble %>% # 데이터 프레임으로 만든 뒤
@@ -67,4 +67,4 @@ dir.create(FOLDER.2) # 별도 폴더를 만든 다음
 
 setwd(FOLDER.2) # 작업 경로로 지정해
 
-write_xlsx(ERROR_LIST, 'errorlist.xlsx') # 엑셀 파일로 출력(저장)
+write.xlsx(ERROR_LIST, 'errorlist.xlsx') # 엑셀 파일로 출력(저장)
