@@ -4,6 +4,9 @@
 
 # 0. what do you want
 
+ID = 'ISTA####' # 아이디
+PW = 'ISTA#######' # 비밀번호
+
 FOLDER = '/Users/baehyeongchan/Dropbox/Mac/Documents/GitHub/KIET_Public' # 메인 폴더 경로
 
 TABLEID = 'DT_MOTIE_FI_001_CGH' # 통계표 ID
@@ -45,10 +48,10 @@ WEB = webdriver.Chrome('./chromedriver') # 크롬 오픈
 WEB.get('https://istans.or.kr/nsist') # 관리 사이트 접속
 
 WEB.find_element('xpath', '//*[@id="emp_id_pseudo"]').click() # 아이디 창 클릭
-WEB.find_element('xpath', '//*[@id="emp_id"]').send_keys('ISTANS05') # 아이디 입력
+WEB.find_element('xpath', '//*[@id="emp_id"]').send_keys(ID) # 아이디 입력
 
 WEB.find_element('xpath', '//*[@id="pw_pseudo"]').click() # 패스워드 창 클릭
-WEB.find_element('xpath', '//*[@id="pw"]').send_keys('ISTANS0500!') # 패스워드 입력
+WEB.find_element('xpath', '//*[@id="pw"]').send_keys(PW) # 패스워드 입력
 
 temp = '//*[@id="ext-gen7"]/table[1]/tbody/tr/td/table/tbody/tr[1]/td' # xpath 길어서 분리
 WEB.find_element('xpath', temp + '[1]/form/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td[2]/span/input').click() ; DELAY() # 로그인 버튼 클릭
