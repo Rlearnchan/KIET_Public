@@ -143,6 +143,12 @@
  - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
  - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
 
+# istans
+
+[ISTANS 엑셀 업로드]
+
+열심히 작성 예정
+
 # kita
 
 [무역협회 테이블 크롤링]
