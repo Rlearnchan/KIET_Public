@@ -103,8 +103,6 @@ for i in list(range(0, len(FILE_LIST))) : # loop
 
     # 3-2. detail
 
-    # 여기도 for 구문 넣어야 함
-
     if PERIOD_NUM == 3 : # 월 자료라면 추가 입력
         
         MONTH = FILE_NAME[0:0] # 월
