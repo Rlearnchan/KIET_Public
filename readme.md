@@ -142,7 +142,31 @@
  - 크롬브라우저가 업데이트되면, chromedriver.exe 도 같은 버전으로 대체해줘야 함
  - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
  - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
+
+# istans
+
+[ISTANS 데이터 업로드]
+
+1. 파이썬 초기 세팅 필요
+
+ - Anaconda 설치
+ - 가상환경 활성화 : Anaconda prompt 실행, '개인설치경로:\Anaconda3\Scripts\activate base' 입력
+ - 라이브러리 설치 : Anaconda prompt 실행, 'conda install selenium' 입력
  
+ - Visual Studio Code 설치
+ - 확장 설치 : 한국어 입력기(최초 실행 시 우측 하단에 알림), python(확장 탭에서 직접 검색)
+ - 명령 팔레트(좌측 하단 톱니바퀴)에서 terminal select default profile = command prompt로 설정
+ 
+ - chromedriver.exe 다운로드
+
+2. istans.py 열어서 '0. what do you need' 파트의 다음 항목 수정
+
+ - ID : 아이디
+ - PW : 패스워드
+ - FOLDER : 작업 경로
+ 
+3. 전부 실행
+
 # kita
 
 [무역협회 테이블 크롤링]
