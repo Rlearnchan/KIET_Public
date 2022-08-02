@@ -153,7 +153,34 @@
  - 해당 엑셀 파일은 일종의 가이드라인으로, row/column 주어진 대로 기존 데이터를 맞춰야 함
  - row/column이 너무 많다면 '통계표 초기조회 조건'을 설정, 분류/항목을 적절히 재배치해야 함
  - 테스트 통계표를 만들어둔 바, 상기 내용을 체크해봐도 좋을 듯
- - 가공을 마친 파일은 규칙에 따라 이름 지어둘 것
+ - 가공을 마친 파일은 규칙에 따라 이름 지어둘 것 
+
+2. 파이썬 초기 세팅
+
+ - Anaconda 설치
+ - 가상환경 활성화 : Anaconda prompt 실행, '개인설치경로:\Anaconda3\Scripts\activate base' 입력
+ - 라이브러리 설치 : Anaconda prompt 실행, 'conda install selenium' 입력
+ 
+ - Visual Studio Code 설치
+ - 확장 설치 : 한국어 입력기(최초 실행 시 우측 하단에 알림), python(확장 탭에서 직접 검색)
+ - 명령 팔레트(좌측 하단 톱니바퀴)에서 terminal select default profile = command prompt로 설정
+ 
+3. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
+
+ - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
+
+4. istans.py 열어서 '0. what do you need' 파트의 다음 항목 수정
+
+ - ID : 아이디
+ - PW : 패스워드
+ - FOLDER : 작업 경로
+ 
+5. 전부 실행 (ctrl+F5)
+
+6. 폴더에 'result.xlsx' 파일이 생성
+
+ - 업로드한 순서대로 메타데이터, 소요시간, 수정여부 등이 기재
+ - 수 분 소요되는 파일은 수정여부 미확인(CHECK) 이므로, 시스템 내 '작업별 관리현황' 페이지 참고
 
  <테스트 통계표 목록>
 
@@ -183,34 +210,7 @@
  - 분류 : C3 (기타법인)
  - 시작행, 시작열, 종료열 : (4, E) ~ (?, CZ) 범위의 셀
  - 시작연도, 종료연도 : 1991 (단일 연도)
- - 시작세부시점, 종료세부시점 : 00 (연 자료라 미기재) 
-
-2. 파이썬 초기 세팅
-
- - Anaconda 설치
- - 가상환경 활성화 : Anaconda prompt 실행, '개인설치경로:\Anaconda3\Scripts\activate base' 입력
- - 라이브러리 설치 : Anaconda prompt 실행, 'conda install selenium' 입력
- 
- - Visual Studio Code 설치
- - 확장 설치 : 한국어 입력기(최초 실행 시 우측 하단에 알림), python(확장 탭에서 직접 검색)
- - 명령 팔레트(좌측 하단 톱니바퀴)에서 terminal select default profile = command prompt로 설정
- 
-3. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
-
- - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
-
-4. istans.py 열어서 '0. what do you need' 파트의 다음 항목 수정
-
- - ID : 아이디
- - PW : 패스워드
- - FOLDER : 작업 경로
- 
-5. 전부 실행 (ctrl+F5)
-
-6. 폴더에 'result.xlsx' 파일이 생성
-
- - 업로드한 순서대로 메타데이터, 소요시간, 수정여부 등이 기재
- - 수 분 소요되는 파일은 수정여부 미확인(CHECK) 이므로, 시스템 내 '작업별 관리현황' 페이지 참고
+ - 시작세부시점, 종료세부시점 : 00 (연 자료라 미기재)
 
  <chromedriver.exe 관련>
 
