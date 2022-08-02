@@ -157,15 +157,21 @@
  - 확장 설치 : 한국어 입력기(최초 실행 시 우측 하단에 알림), python(확장 탭에서 직접 검색)
  - 명령 팔레트(좌측 하단 톱니바퀴)에서 terminal select default profile = command prompt로 설정
  
- - chromedriver.exe 다운로드
+2. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
 
-2. istans.py 열어서 '0. what do you need' 파트의 다음 항목 수정
+ - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
+
+3. istans.py 열어서 '0. what do you need' 파트의 다음 항목 수정
 
  - ID : 아이디
  - PW : 패스워드
  - FOLDER : 작업 경로
  
-3. 전부 실행
+4. 전부 실행 (ctrl+F5)
+
+5. 폴더에 'result.xlsx' 파일이 생성
+
+ - 파일 
 
 # kita
 
@@ -197,7 +203,7 @@
 
 # news
 
-[민위원님 전용 뉴스 가판대]
+[뉴스 ]
 
 1. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
 
@@ -230,7 +236,6 @@
  - 연합뉴스 (세계)
  - 뉴시스 (국제최신)
  - 뉴스1 (국제)
- - 산업일보 (전체) : 추가 예정
 
 <chromedriver.exe 관련>
 
