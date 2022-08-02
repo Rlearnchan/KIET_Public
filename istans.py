@@ -1,11 +1,11 @@
 # istans
 
-# 22.07.29 updated
+# 22.08.02 updated
 
 # 0. what do you want
 
-ID = 'ISTANS05' # 아이디
-PW = 'ISTANS0500!' # 비밀번호
+ID = 'ISTA####' # 아이디
+PW = 'ISTA#######' # 비밀번호
 FOLDER = '/Users/baehyeongchan/Dropbox/Mac/Documents/GitHub/KIET_Private/istans' # 작업할 폴더
 
 # 1. setting
@@ -34,14 +34,14 @@ RESULT = pd.DataFrame(columns = ['이름', 'ID', '주기', '항목', '분류', '
 
 # 2-1. login
 
-def DELAY() :
-    sleep(abs(NormalDist(5, 1).samples(1)[0])) # 5초 내외 딜레이
+def DELAY() : # 5초 내외 딜레이 함수
+    sleep(abs(NormalDist(5, 1).samples(1)[0]))
 
 WEB = webdriver.Chrome('./chromedriver') # 크롬 오픈
 WEB.get('https://istans.or.kr/nsist') # 관리 사이트 접속
 
-def TAG(xpath) :
-    return WEB.find_element('xpath', xpath) # html 태그 찾기
+def TAG(xpath) : # html 태그 찾기 함수
+    return WEB.find_element('xpath', xpath)
 
 TAG('//*[@id="emp_id_pseudo"]').click() # 아이디 창 클릭
 TAG('//*[@id="emp_id"]').send_keys(ID) # 아이디 입력
@@ -57,17 +57,17 @@ TAG(temp + '[2]/table/tbody/tr[4]/td[5]/table/tbody/tr[2]/td/table/tbody/tr/td[2
 
 # 3. loop
 
-FILE = list(filter(lambda x : '# .xlsx' in x, os.listdir())) # 엑셀 파일 리스트
+FILE = list(filter(lambda x : '# .xlsx' in x, os.listdir())) # 업로드할 엑셀 파일 리스트
 
-for i in list(range(0, len(FILE))) :
+for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
 
     START = time.time() # 시간 측정
 
-    METADATA = FILE[i].split(' # ') # 파일 이름에서 파라미터 추출
+    METADATA = FILE[i].split(' # ') # 파일 이름에서 데이터 정보 추출
 
-    PARAMETER = pd.DataFrame(METADATA, 
-                            index = ['이름', 'ID', '주기', '항목', '산업레벨', '분류', '시작행', '시작열', '종료열',
-                                    '시작연도', '시작세부시점', '종료연도', '종료세부시점', '확장자']).transpose()
+    PARAMETER = pd.DataFrame(METADATA, # 활용하기 좋게 데이터 프레임으로 만듦
+                             index = ['이름', 'ID', '주기', '항목', '산업레벨', '분류', '시작행', '시작열', '종료열',
+                                      '시작연도', '시작세부시점', '종료연도', '종료세부시점', '확장자']).transpose()
 
     # 3-1. search
 
@@ -220,8 +220,6 @@ for i in list(range(0, len(FILE))) :
     TAG('//*[@id="sendFILE"]').click() # 엑셀 업로드 버튼 클릭
     WebDriverWait(WEB, 1800).until(ec.alert_is_present()) # 알림창 뜰 때까지 대기
 
-    # 알림창이 안 뜰 수도?
-
     WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
 
     WEB.switch_to.window(WINDOW_INSERT) # 윈도우 전환
@@ -233,7 +231,10 @@ for i in list(range(0, len(FILE))) :
         EDIT = 'YES'
         WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
         WebDriverWait(WEB, 1800).until(ec.alert_is_present()) # 수치 변화 있다면 확인 창이 하나 더 뜸
-    elif WEB.switch_to.alert.text == '작업 처리 중입니다. 처리 결과는 [작업별 처리현황]을 참조하세요.' : EDIT = 'CHECK' # 오래 걸리는 경우
+        
+        if WEB.switch_to.alert.text == '작업 처리 중입니다. 처리 결과는 [작업별 처리현황]을 참조하세요.' : 
+          EDIT = 'CHECK' # 오래 걸리는 경우
+          
     else : EDIT = 'NO' # 수치 변화 없는 경우
 
     WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
