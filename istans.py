@@ -6,17 +6,18 @@
 
 ID = 'ISTA####' # 아이디
 PW = 'ISTA#######' # 비밀번호
-FOLDER = '/Users/baehyeongchan/Dropbox/Mac/Documents/GitHub/KIET_Private/istans' # 작업할 폴더
+FOLDER = '/Users/baehyeongchan/Dropbox/Mac/Documents/GitHub/KIET_Public' # 작업할 폴더
 
 # 1. setting
 
-import os
-import pandas as pd
-import time
+import os # 파일 위치
+import pandas as pd # 데이터 프레임
+import time # 시간 측정
 
-from statistics import NormalDist
-from time import sleep
-from selenium import webdriver
+from statistics import NormalDist # 정규분포
+from time import sleep # 대기
+
+from selenium import webdriver # 크롬 자동화
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
@@ -35,12 +36,14 @@ RESULT = pd.DataFrame(columns = ['이름', 'ID', '주기', '항목', '분류', '
 # 2-1. login
 
 def DELAY() : # 5초 내외 딜레이 함수
+    
     sleep(abs(NormalDist(5, 1).samples(1)[0]))
 
 WEB = webdriver.Chrome('./chromedriver') # 크롬 오픈
 WEB.get('https://istans.or.kr/nsist') # 관리 사이트 접속
 
 def TAG(xpath) : # html 태그 찾기 함수
+    
     return WEB.find_element('xpath', xpath)
 
 TAG('//*[@id="emp_id_pseudo"]').click() # 아이디 창 클릭
@@ -72,26 +75,24 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     # 3-1. search
 
     WINDOW_SEARCH = WEB.window_handles[-1] # 통계DB관리시스템(검색창) 윈도우
-
     WEB.switch_to.window(WINDOW_SEARCH) # 윈도우 전환
-    WEB.switch_to.frame('tac_main_contents_tab_12122101204_body') # 프레임 전환
 
+    WEB.switch_to.frame('tac_main_contents_tab_12122101204_body') # 프레임 전환
     TAG('//*[@id="inp_srch_tbl_id"]').clear() # 통계표 ID 지우기
     TAG('//*[@id="inp_srch_tbl_id"]').send_keys(PARAMETER.ID) # 통계표 ID 입력
-
     TAG('//*[@id="btn_stbl_srch"]').click() ; DELAY() # 검색 버튼 클릭
 
     WEB.switch_to.frame('__processbarIFrame') # 프레임 전환
     WebDriverWait(WEB, 1800).until(ec.invisibility_of_element((By.XPATH, '/html/body/div/img'))) # 조회될 때까지 대기
     
     WEB.switch_to.default_content() # 최초 프레임으로 복귀
+    
     WEB.switch_to.frame('tac_main_contents_tab_12122101204_body') # 프레임 전환
     TAG('//*[@id="btn_dt_inpt"]').click() ; DELAY() # 수치입력 버튼 클릭
 
-    # 3-2. insert
+    # 3-2. cycle
 
     WINDOW_INSERT = WEB.window_handles[-1] # 수치입력 팝업 윈도우
-
     WEB.switch_to.window(WINDOW_INSERT) # 윈도우 전환
 
     PERIOD_NUM = PERIOD_SET[PERIOD_SET.코드 == PARAMETER.주기[0]].iloc[0, 2] # 주기 구분(번호)
@@ -100,8 +101,7 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
 
     # 3-3. year
 
-    YEAR_START = PARAMETER.시작연도
-    YEAR_END = PARAMETER.종료연도
+    YEAR_START = PARAMETER.시작연도 ; YEAR_END = PARAMETER.종료연도 # 연도 지정
 
     TEXT_START = TAG('//*[@id="inp_strt_prd_de"]') # 시작 연도 부분
     TEXT_START.clear() # 적힌 것 지우고
@@ -114,28 +114,29 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     # 4. detail
 
     def WAIT() : # 로딩 대기 함수
+        
         WEB.switch_to.frame('__processbarIFrame') # 프레임 전환
         WebDriverWait(WEB, 1800).until(ec.invisibility_of_element((By.XPATH, '/html/body/div/img'))) ; DELAY() # 조회될 때까지 대기
         
         WEB.switch_to.window(WINDOW_INSERT) # 윈도우 전환
+
         WEB.switch_to.frame('__processbarIFrame') # 프레임 전환
         WebDriverWait(WEB, 1800).until(ec.invisibility_of_element((By.XPATH, '/html/body/div/img'))) ; DELAY() # 표 나올 때까지 대기
+        
         WEB.switch_to.default_content() # 최초 프레임으로 복귀
 
     # 4-1. month & quarter
 
     if PARAMETER.주기[0] == 'M' : # 월 자료라면 추가 입력
 
-        MONTH_START = PARAMETER.시작세부시점
-        MONTH_END = PARAMETER.종료세부시점
+        MONTH_START = PARAMETER.시작세부시점 ; MONTH_END = PARAMETER.종료세부시점 # 월 지정
 
         TEXT_START.send_keys(MONTH_START) # 시작 세부시점 입력
         TEXT_END.send_keys(MONTH_END) # 종료 세부시점 입력
 
     if PARAMETER.주기[0] == 'Q' : # 분기 자료라면 추가 입력
 
-        QUARTER_START = PARAMETER.시작세부시점[0][-1:]
-        QUARTER_END = PARAMETER.종료세부시점[0][-1:]
+        QUARTER_START = PARAMETER.시작세부시점[0][-1:] ; QUARTER_END = PARAMETER.종료세부시점[0][-1:] # 분기 지정
 
         TAG('//*[@id="sel_strt_prd_de_button"]').click() # 시작 드롭다운 열기
         temp_start = '//*[@id="sel_strt_prd_de_itemTable_main"]/tbody/tr[' + QUARTER_START + ']' # 시작 세부시점 파트
@@ -152,11 +153,9 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
         TAG('//*[@id="ahf_set_itmlist"]/a').click() # 분류/항목 선택 버튼 클릭
 
         WEB.switch_to.frame('ClsItmChoicePopup_iframe') ; DELAY() # 프레임 전환
-
         TAG('//*[@id="ahf_measure_all_left_move"]').click() # 기존 항목 삭제
-        TAG('//*[@id="grd_measure_left_body_tbody"]/tr[' + PARAMETER.항목[0][-1:] + ']').click() ; DELAY()
+        TAG('//*[@id="grd_measure_left_body_tbody"]/tr[' + PARAMETER.항목[0][-1:] + ']').click() ; DELAY() # 항목 선택
         TAG('//*[@id="ahf_measure_right_move"]').click() ; DELAY() # 개별 반영
-
         TAG('//*[@id="ahf_input"]').click() ; DELAY() # 완료 버튼
 
         WAIT() # 표 나올 때까지 대기
@@ -168,10 +167,8 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
         TAG('//*[@id="ahf_set_itmlist"]/a').click() # 분류/항목 선택 버튼 클릭
 
         WEB.switch_to.frame('ClsItmChoicePopup_iframe') ; DELAY() # 프레임 전환
-
         TAG('//*[@id="sel_ov_l1_lev_input_0"]/option[' + PARAMETER.산업레벨[0][-1:] + ']').click() ; DELAY() # 산업레벨 선택
         TAG('//*[@id="ahf_ov_l1_all_right_move"]').click() ; DELAY() # 모두 반영
-        
         TAG('//*[@id="ahf_input"]').click() ; DELAY() # 완료 버튼
 
         WAIT() # 표 나올 때까지 대기
@@ -183,11 +180,9 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
         TAG('//*[@id="ahf_set_itmlist"]/a').click() # 분류/항목 선택 버튼 클릭
 
         WEB.switch_to.frame('ClsItmChoicePopup_iframe') ; DELAY() # 프레임 전환
-
         TAG('//*[@id="ahf_ov_l2_all_left_move"]').click() # 기존 분류 삭제
         TAG('//*[@id="grd_ov_l2_left_body_tbody"]/tr[' + PARAMETER.분류[0][-1:] + ']').click() ; DELAY() # 분류 선택
         TAG('//*[@id="ahf_ov_l2_right_move"]').click() ; DELAY() # 개별 반영
-
         TAG('//*[@id="ahf_input"]').click() ; DELAY() # 완료 버튼
 
         WAIT() # 표 나올 때까지 대기
@@ -199,6 +194,7 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     if PARAMETER.항목[0] == 'V0' and PARAMETER.산업레벨[0] == 'I0' and PARAMETER.분류[0] == 'C0' : # 세부 세팅 없다면, 수치입력 눌러서 표 출력
         
         TAG('//*[@id="ahf_input"]').click() # 수치입력 버튼 클릭
+
         WEB.switch_to.frame('__processbarIFrame') # 프레임 전환
         WebDriverWait(WEB, 1800).until(ec.invisibility_of_element((By.XPATH, '/html/body/div/img'))) # 표 나올 때까지 대기
     
@@ -207,7 +203,6 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     TAG('//*[@id="ahf_excel_upload"]').click() ; DELAY() # 엑셀 업로드 버튼 클릭
 
     WINDOW_EXCEL = WEB.window_handles[-1] # 엑셀업로드 팝업 윈도우
-
     WEB.switch_to.window(WINDOW_EXCEL) # 윈도우 전환
 
     TAG('//*[@id="inp_sheetNo"]').send_keys('1') # 시트 번호 입력
@@ -216,10 +211,8 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     TAG('//*[@id="inp_endCol"]').send_keys(PARAMETER.종료열) # 종료 열 입력
 
     TAG('//*[@id="filename"]').send_keys(FOLDER + '/' + FILE[i]) # 파일선택
-
     TAG('//*[@id="sendFILE"]').click() # 엑셀 업로드 버튼 클릭
     WebDriverWait(WEB, 1800).until(ec.alert_is_present()) # 알림창 뜰 때까지 대기
-
     WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
 
     WEB.switch_to.window(WINDOW_INSERT) # 윈도우 전환
@@ -228,13 +221,13 @@ for i in list(range(0, len(FILE))) : # 개별 파일마다 다음 작업 실행
     WebDriverWait(WEB, 1800).until(ec.alert_is_present()) # 알림창 뜰 때까지 대기
     
     if WEB.switch_to.alert.text == '저장하시겠습니까?' : # 수치 변화 있는 경우
-        EDIT = 'YES'
+        
+        EDIT = 'YES' # 결과 기록
         WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
         WebDriverWait(WEB, 1800).until(ec.alert_is_present()) # 수치 변화 있다면 확인 창이 하나 더 뜸
         
-        if WEB.switch_to.alert.text == '작업 처리 중입니다. 처리 결과는 [작업별 처리현황]을 참조하세요.' : 
-          EDIT = 'CHECK' # 오래 걸리는 경우
-          
+        if WEB.switch_to.alert.text == '작업 처리 중입니다. 처리 결과는 [작업별 처리현황]을 참조하세요.' : EDIT = 'CHECK' # 오래 걸리는 경우
+
     else : EDIT = 'NO' # 수치 변화 없는 경우
 
     WEB.switch_to.alert.accept() ; DELAY() # 확인 클릭
