@@ -12,13 +12,13 @@ DOWNLOAD = '/Users/baehyeongchan/Dropbox/Mac/Downloads' # 다운로드 경로
 
 # 1. setting
 
-import os
-import pandas as pd
+import os # 폴더, 파일 관리
+import pandas as pd # 데이터프레임
 
-from math import ceil
-from statistics import NormalDist
-from time import sleep
-from selenium import webdriver
+from math import ceil # 올림
+from statistics import NormalDist # 정규분포
+from time import sleep # 딜레이
+from selenium import webdriver # 크롬 자동화
 
 # 2. basic
 
@@ -66,9 +66,7 @@ for YEAR in list(range(START, END+1)) : # 연도 START ~ END
             for c in list(range(10)) : # 페이지 1 ~ 10, dummy 11
 
                 OLD = list(filter(lambda x : '.xls' in x, os.listdir(DOWNLOAD))) # 다운된 파일
-
                 TAG('//*[@id="contents"]/div[2]/form/div/div/div[1]/div/a[2]').click() ; DELAY() # 다운로드
-
                 NEW = list(filter(lambda x : '.xls' in x, os.listdir(DOWNLOAD))) # 다운된 파일 + 새 파일
 
                 FILE = list(set(NEW) - set(OLD))[0] # 새로 다운받은 파일 이름
@@ -80,10 +78,10 @@ for YEAR in list(range(START, END+1)) : # 연도 START ~ END
 
                 try : TAG('//*[@id="pageArea"]/span/a[' + str(c+1) + ']').click() ; DELAY() # 다음 페이지
                 
-                except :
+                except : # 다음 페이지가 없다면
 
-                    TAG('//*[@id="pageArea"]/a[2]').click() ; DELAY() # 다음 10개 페이지
-                    if TAG('//*[@id="pageArea"]/a[2]').get_attribute('href').startswith('https') : break # 마지막이라면 3-1 단계로 복귀
+                    TAG('//*[@id="pageArea"]/a[2]').click() ; DELAY() # 다음 10개 페이지로 전환
+                    if TAG('//*[@id="pageArea"]/a[2]').get_attribute('href').startswith('https') : break # 아예 마지막이라면 3-1 단계로 복귀
 
 # 4. export
 
