@@ -83,36 +83,36 @@ for YEAR in list(range(START, END+1)) : # 연도 START ~ END
                     TAG('//*[@id="pageArea"]/a[2]').click() ; DELAY() # 다음 10개 페이지로 전환
                     if TAG('//*[@id="pageArea"]/a[2]').get_attribute('href').startswith('https') : break # 아예 마지막이라면 3-1 단계로 복귀
 
-# 4. export
+# 4. save
 
 DATA[['연도', 'HS코드', 'MTI코드', 'SITC코드', '품목명']].to_excel(FOLDER + '/' + 'DATA.xlsx') # 열 위치 변경해서 저장
 
-# 5. sorting
+# 5. sorting (오래걸림)
 
-RAW = pd.read_excel('DATA.xlsx') # 데이터 로드
+# RAW = pd.read_excel(FOLDER + '/DATA.xlsx') # 데이터 로드
 
-RAW['분류'] = '기타' # 분류 컬럼 추가
+# RAW['분류'] = '기타' # 분류 컬럼 추가
 
-TARGET = pd.DataFrame(data = ['831', '836110', ['741', '742'], '746', '21', '61', ['71', '72', '75', '79'], '4', '8352', ['2262', '229', '950', '733', '8147'], '133'], 
-                      index = ['반도체', '디스플레이', '자동차', '조선', '화학(석유화학)', '철강', '기계(일반기계)', '섬유', '배터리', '바이오', '정유'],
-                      columns = ['시작코드']) # 분류 기준
+# TARGET = pd.DataFrame(data = ['831', '836110', ['741', '742'], '746', '21', '61', ['71', '72', '75', '79'], '4', '8352', ['2262', '229', '950', '733', '8147'], '133'], 
+#                      index = ['반도체', '디스플레이', '자동차', '조선', '화학(석유화학)', '철강', '기계(일반기계)', '섬유', '배터리', '바이오', '정유'],
+#                      columns = ['시작코드']) # 분류 기준
 
-for a in list(range(RAW.shape[0])) : # 개별 행마다
-
-    for b in list(range(len(TARGET.index))) : # 11개 산업 대상
-
-        if len(TARGET.loc[TARGET.index[b]][0]) == 1 : 
-            
-            if RAW['MTI코드'][a].startswith(TARGET.loc[TARGET.index[b]][0]) : # 시작 코드가 동일하다면
-
-                RAW['분류'] = TARGET.index[b] # 분류에 해당 산업 기재
-
-        else : 
-            
-            for c in list(range(len(TARGET.loc[TARGET.index[b]][0]))) : # 시작 코드가 여러 개라면 추가 loop
-            
-                if RAW['MTI코드'][a].startswith(TARGET.loc[TARGET.index[b]][0][c]) :
-
-                    RAW['분류'] = TARGET.index[b]
-
-RAW[['연도', '분류', 'MTI코드', 'HS코드', 'SITC코드', '품목명']].sort_values(by = ['연도', '분류', 'MTI코드']).to_excel(FOLDER + '/' + 'SORTED.xlsx') # 정렬해서 저장
+# for a in list(range(RAW.shape[0])) : # 개별 행마다
+#
+#    for b in list(range(len(TARGET.index))) : # 11개 산업 대상
+#
+#        if len(TARGET.loc[TARGET.index[b]][0]) == 1 : 
+#            
+#            if str(RAW['MTI코드'][a]).startswith(TARGET.loc[TARGET.index[b]][0]) : # 시작 코드가 동일하다면
+#
+#                RAW['분류'] = TARGET.index[b] # 분류에 해당 산업 기재
+#
+#        else : 
+#            
+#            for c in list(range(len(TARGET.loc[TARGET.index[b]][0]))) : # 시작 코드가 여러 개라면 추가 loop
+#            
+#                if str(RAW['MTI코드'][a]).startswith(TARGET.loc[TARGET.index[b]][0][c]) :
+#
+#                    RAW['분류'] = TARGET.index[b]
+#
+# RAW[['연도', '분류', 'MTI코드', 'HS코드', 'SITC코드', '품목명']].sort_values(by = ['연도', '분류', 'MTI코드']).to_excel(FOLDER + '/' + 'SORTED.xlsx') # 정렬해서 저장

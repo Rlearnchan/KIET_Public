@@ -243,7 +243,6 @@
 
  - 연도, HS코드, MTI코드, SITC코드, 품목명 기재
  - 페이지 순서대로 100개 내외로 적층, 목적에 따라 sorting 필요
- - sorting 코드 추가 : 'SORTED.xlsx' 파일도 생성
 
 # news
 
