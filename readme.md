@@ -220,7 +220,7 @@
 
 # kita
 
-[무역협회 테이블 크롤링]
+[무역협회 테이블]
 
 1. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
 
@@ -239,6 +239,34 @@
  - console에 페이지 넘김 관련해 selenium message가 뜨지만, 작동에는 문제 없음
 
 4. 폴더에 'kita_가공단계' 식으로 엑셀 파일이 생성
+
+ <chromedriver.exe 관련>
+
+ - 크롬브라우저가 업데이트되면, chromedriver.exe 도 같은 버전으로 대체해줘야 함
+ - 크롬브라우저 버전 확인 : 설정 - Chrome 정보 - 'Chrome이 최신 버전입니다.' 아래 숫자 체크
+ - chromedriver.exe 다운로드 : 구글에 'chrome driver' 검색 - 맨 처음 결과(chromedriver.chromium.org) 접속 - 같은 버전 클릭, 다운로드
+
+# kita2
+
+[무역협회 한국품목코드]
+
+1. 폴더 내 다음 파일들이 있는지 확인 (크롤링 도구)
+
+ - chromedriver.exe (크롬브라우저와 버전 같아야 함, 아래 자세히 설명)
+
+2. kita2.py 열어서 '0. what do you need' 파트의 다음 항목 수정
+
+ - START : 시작연도
+ - END : 종료연도
+ - FOLDER : 작업 경로
+ - DOWNLOAD : 크롬 다운로드 경로
+
+3. 전부 실행 (ctrl+F5)
+
+4. 폴더에 'DATA.xlsx' 파일이 생성
+
+ - 연도, HS코드, MTI코드, SITC코드, 품목명 기재
+ - 페이지 순서대로 100개 내외로 적층, 목적에 따라 sorting 필요
 
  <chromedriver.exe 관련>
 
