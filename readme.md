@@ -116,7 +116,7 @@
 
 1. data_predictor.xlsx 열어서 새로운 input 추가
 
- - 지난 달에 이어서 작업한다면, new_cli_원자재.xlsx 파일들의 이름을 cli_원자재.xlsx로 고쳐야 함
+ - 지난 달에 이어서 작업한다면, 'new_cli_원자재.xlsx' 파일들의 이름을 'cli_원자재.xlsx'로 고쳐야 함
 
 2. cli.py 전체 실행
 
