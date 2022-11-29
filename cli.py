@@ -1,11 +1,11 @@
 # cli
 
-# 22.11.27 updated
+# 22.11.29 updated
 
 # 0. what do you need
 
 FOLDER = '/Users/baehyeongchan/Dropbox/Mac/Documents/GitHub/KIET_Private/cli2' # 폴더 경로
-PART = ['alu', 'coal', 'iron', 'lead', 'ng', 'ni', 'wti', 'xcu', 'znc'] # 분석 대상
+PART = ['alu', 'coal', 'iron', 'lead', 'ng', 'ni', 'wti', 'xcu', 'znc', 'steel', 'nonfe'] # 분석 대상
 
 # 1. setting
 
