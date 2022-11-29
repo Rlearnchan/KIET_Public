@@ -122,6 +122,17 @@
 
 3. 생성된 result.xlsx 확인
 
+<과거 시점을 분석할 경우>
+
+ - data_predictor.xlsx 마지막 줄이 해당(t) 시점
+ - cli_원자재.xlsx 마지막 줄이 직전(t-1) 시점이 되도록 데이터 삭제
+ - 이후 cli.py 실행하고 result.xlsx 확인
+ 
+<특정 부문만 분석할 경우>
+ 
+ - '0. what do you need' 파트의 다음 항목 수정
+ - PART : 분석할 원자재 부문 (default = 11개)
+
 # dobby
 
 [자동퇴근 프로그램]
